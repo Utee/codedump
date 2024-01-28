@@ -1,0 +1,98 @@
+<!-- app/templates/dashboard.html -->
+
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-2 d-md-block bg-light sidebar">
+                <div class="sidebar-header">
+                    <h3>Dashboard</h3>
+                </div>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-content="profile-content">
+                            <span data-feather="home"></span>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-content="settings-content">
+                            <span data-feather="settings"></span>
+                            Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-content="upload-content">
+                            <span data-feather="upload"></span>
+                            Upload
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Content -->
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+
+                <!-- Container for dynamically loaded content -->
+                <div id="dynamic-content-container"></div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var sidebarLinks = document.querySelectorAll('.nav-link');
+            var dynamicContentContainer = document.getElementById('dynamic-content-container');
+
+            sidebarLinks.forEach(function (link) {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+
+                    var contentId = link.getAttribute('data-content');
+                    loadContent(contentId);
+                });
+            });
+
+            function loadContent(contentId) {
+                var contentPath = '/get_content/' + contentId;  // Replace with your Flask route
+                fetch(contentPath)
+                    .then(response => response.text())
+                    .then(data => {
+                        dynamicContentContainer.innerHTML = data;
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebarLinks = document.querySelectorAll('.nav-link');
+        var dashboardContents = document.querySelectorAll('.dashboard-content');
+
+        sidebarLinks.forEach(function (link) {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                var contentId = link.getAttribute('data-content');
+                showContent(contentId);
+            });
+        });
+
+        function showContent(contentId) {
+            dashboardContents.forEach(function (content) {
+                if (content.id === contentId) {
+                    content.style.display = "block";
+                } else {
+                    content.style.display = "none";
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

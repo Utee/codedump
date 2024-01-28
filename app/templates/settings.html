@@ -1,0 +1,45 @@
+<!-- app/templates/settings.html -->
+
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>Account Settings</h2>
+
+        <!-- Add your settings form here -->
+        <form action="{{ url_for('update_settings') }}" method="post">
+            <!-- Add input fields for different settings -->
+            <div class="form-group">
+                <label for="full_name">Full Name:</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="social_links">Social Links:</label>
+                <!-- You can add more social link fields as needed -->
+                <input type="text" class="form-control" id="social_links" name="social_links" placeholder="e.g., https://twitter.com/yourusername">
+            </div>
+
+            <div class="form-group">
+                <label for="profile_picture">Profile Picture URL:</label>
+                <input type="text" class="form-control" id="profile_picture" name="profile_picture" placeholder="e.g., https://example.com/profile.jpg">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+        </form>
+    </div>
+{% endblock %}

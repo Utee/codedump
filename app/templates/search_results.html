@@ -1,0 +1,19 @@
+<!-- app/templates/search_results.html -->
+
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>Search Results for "{{ query }}"</h2>
+
+        {% if results %}
+            <ul>
+                {% for result in results %}
+                    <li>{{ result.type }}: {{ result.content }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
